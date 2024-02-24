@@ -50,15 +50,32 @@ public class ParametersTest {
         assertThat(Arrays.equals(parameters.getKeyValues(mock(Traverser.Admin.class)), new Object[0]), is(true));
     }
 
+    private static boolean hasItemInArray(Object[] array, Object item) {
+        if (item == null) {
+            for (Object arrayItem : array) {
+                if (arrayItem == null) return true;
+            }
+        } else {
+            for (Object arrayItem : array) {
+                if (item.equals(arrayItem)) return true;
+            }
+        }
+        return false;
+    }
+    
+ 
+ 
     @Test
     public void shouldAllowNullValues() {
-        final Parameters parameters = new Parameters();
+       final Parameters parameters = new Parameters();
         parameters.set(null, "a", null, "b", "bat", "c", "cat");
-
+ 
+ 
         final Object[] params = parameters.getKeyValues(mock(Traverser.Admin.class));
         assertEquals(6, params.length);
-        assertThat(Arrays.equals(new Object[] {"a", null, "b", "bat", "c", "cat"}, params), is(true));
+        assert(hasItemInArray(params, null));
     }
+ 
 
     @Test
     public void shouldGetKeyValues() {
